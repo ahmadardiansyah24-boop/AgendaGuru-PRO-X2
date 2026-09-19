@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AgendaGuru PRO X 2.0</title>
+  <meta name="description" content="Aplikasi administrasi guru berbasis web untuk mengelola absensi, jadwal, nilai, jurnal mengajar, dan rekap cetak.">
+  <meta property="og:title" content="AgendaGuru PRO X 2.0">
+  <meta property="og:description" content="Aplikasi administrasi guru berbasis web untuk mengelola absensi, jadwal, nilai, jurnal mengajar, dan rekap cetak.">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<div id="loginView" class="login">
+  <div class="card" style="text-align:center">
+    <img id="loginLogo" class="logoPreview" style="width:92px;height:92px;border-radius:50%;border:2px solid var(--gold);margin:auto;display:block" alt="Logo sekolah">
+    <h2 style="margin:12px 0 2px;color:var(--gold2)">AgendaGuru PRO X 2.0</h2>
+    <div id="loginSchool" class="muted" style="margin-bottom:18px">Premium Gold Dark</div>
+    <div class="field" style="text-align:left"><label>Email</label><input id="loginUser" type="email" placeholder="nama@email.com" autocomplete="username"></div>
+    <div class="field" style="text-align:left"><label>Password</label><div style="display:flex;gap:6px"><input id="loginPass" type="password" placeholder="Password" autocomplete="current-password" style="flex:1"><button class="btn" onclick="togglePass()">👁</button></div></div>
+    <button class="btn gold" style="width:100%" onclick="login()">Masuk</button>
+    <p class="muted" style="font-size:11px;margin-bottom:0">Akun pertama dapat dibuat melalui Setup Admin.</p>
+  </div>
+</div>
+
+
+<div id="setupModal" class="login" style="display:none;position:fixed;inset:0;background:#050607ee;z-index:30">
+  <div class="card" style="width:min(470px,100%)">
+    <h2 style="color:var(--gold2);margin-top:0">Setup Admin Pertama</h2>
+    <p class="muted">Buat akun Admin untuk aplikasi ini. Password tidak disimpan sebagai teks biasa.</p>
+    <div class="field"><label>Nama Admin</label><input id="setupName" placeholder="Administrator"></div>
+    <div class="field"><label>Email Admin</label><input id="setupEmail" type="email" placeholder="admin@sekolah.sch.id"></div>
+    <div class="field"><label>Password</label><input id="setupPass" type="password" placeholder="Minimal 6 karakter"></div>
+    <div class="toolbar"><button class="btn gold" onclick="createAdmin()">Buat Admin</button><button class="btn" onclick="$('setupModal').style.display='none'">Batal</button></div>
+  </div>
+</div>
+<div id="app" class="app" style="display:none">
+<aside id="side" class="side">
+  <div class="brand"><div class="brandmark">AG</div><div><b>AgendaGuru</b><small>PRO X 2.0</small></div></div>
+  <nav>
+    <button class="active" onclick="showPage('dashboard',this)">⌂ Dashboard</button>
+    <button onclick="showPage('sekolah',this)">🏫 Sekolah & Guru</button>
+    <button onclick="showPage('kelas',this)">👥 Kelas & Siswa</button>
+    <button onclick="showPage('jadwal',this)">📅 Jadwal</button>
+    <button onclick="showPage('jurnal',this)">📝 Jurnal Mengajar</button>
+    <button onclick="showPage('absensi',this)">✅ Absensi</button>
+    <button onclick="showPage('nilai',this)">📊 Nilai</button>
+    <button onclick="showPage('koko',this)">🎯 Kokurikuler</button>
+    <button onclick="showPage('denah',this)">🪑 Denah</button>
+    <button onclick="showPage('adminprint',this)">🖨️ Administrasi & Cetak</button>
+    <button id="navUsers" onclick="showPage('users',this)">👤 Manajemen Akun</button><button onclick="showPage('backup',this)">💾 Backup & Restore</button>
+  </nav>
+</aside>
+
+<main class="main">
+<div class="top"><div class="title"><button class="btn mobileBtn" onclick="toggleSide()">☰</button><h1 id="pageTitle">Dashboard</h1><p id="schoolSub">AgendaGuru PRO X 2.0</p></div><div id="userBadge" class="pill">Belum login</div><div class="actions"><button class="btn" onclick="backup()">Backup</button><button class="btn gold" onclick="window.print()">Cetak</button><button class="btn danger" onclick="logout()">Keluar</button></div></div>
+
+<section id="dashboard" class="page active">
+<div class="card noPrint" style="margin-bottom:14px;border-color:#5b4b29"><b style="color:var(--gold2)">Mode Akses</b><div class="muted">Admin: akses seluruh data. Guru: data kerja guru sendiri. Struktur database lokal ini siap dinaikkan ke backend untuk isolasi data antar akun.</div></div>
+<div class="grid g4">
+<div class="card stat"><small>Siswa</small><b id="sSiswa">0</b></div><div class="card stat"><small>Kelas</small><b id="sKelas">0</b></div><div class="card stat"><small>Jurnal</small><b id="sJurnal">0</b></div><div class="card stat"><small>Catatan Absensi</small><b id="sAbs">0</b></div>
+</div>
+<div class="grid g2 section">
+<div class="card"><h2>Ringkasan Kehadiran</h2><div class="chart" id="attChart"></div><div id="attLegend" class="muted"></div></div>
+<div class="card"><h2>Jadwal Hari Ini</h2><div id="todaySchedule" class="empty">Belum ada jadwal.</div></div>
+</div>
+</section>
+
+<section id="sekolah" class="page"><div class="card"><h2>Identitas Sekolah & Guru</h2><div class="row">
+<div><div class="field"><label>Nama Sekolah</label><input id="schoolName"></div><div class="field"><label>NPSN</label><input id="npsn"></div><div class="field"><label>Alamat</label><textarea id="schoolAddr"></textarea></div><div class="field"><label>Logo Sekolah</label><input id="logo" type="file" accept="image/*" onchange="loadLogo(event)"></div></div>
+<div><img id="logoPreview" class="logoPreview"><div class="field"><label>Nama Guru</label><input id="teacher"></div><div class="field"><label>NIP</label><input id="nip"></div><div class="field"><label>Kepala Sekolah</label><input id="head"></div><div class="field"><label>Tahun Ajaran</label><input id="year" value="2025/2026"></div><div class="field"><label>Semester</label><select id="semester"><option>1</option><option>2</option></select></div></div>
+</div><button class="btn gold" onclick="saveSchool()">Simpan Identitas</button></div></section>
+
+
+<section id="users" class="page">
+ <div class="card"><h2>Manajemen Akun Guru</h2><div class="toolbar"><button class="btn gold" onclick="addTeacherAccount()">+ Tambah Guru</button></div>
+ <div class="tablewrap"><table><thead><tr><th>No</th><th>Nama</th><th>Email</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="userRows"></tbody></table></div></div>
+</section>
+
+<section id="kelas" class="page"><div class="card"><h2>Manajemen Kelas & Siswa</h2><div class="toolbar"><button class="btn gold" onclick="addClass()">+ Kelas</button><button class="btn" onclick="addStudent()">+ Siswa</button><button class="btn" onclick="importStudents()">Import CSV</button></div><div class="row"><div class="field"><label>Pilih Kelas</label><select id="classSelect" onchange="renderStudents()"></select></div><div class="field"><label>Cari siswa</label><input id="studentSearch" oninput="renderStudents()" placeholder="Nama/NISN"></div></div><div class="tablewrap"><table><thead><tr><th>No</th><th>Nama</th><th>NIS/NISN</th><th>JK</th><th>Aksi</th></tr></thead><tbody id="studentRows"></tbody></table></div></div></section>
+
+<section id="jadwal" class="page"><div class="card"><h2>Jadwal Pelajaran</h2><div class="toolbar"><button class="btn gold" onclick="addSchedule()">+ Tambah Jadwal</button></div><div class="tablewrap"><table><thead><tr><th>Hari</th><th>Jam</th><th>Kelas</th><th>Mapel</th><th>Ruang</th><th>Aksi</th></tr></thead><tbody id="scheduleRows"></tbody></table></div></div></section>
+
+<section id="jurnal" class="page"><div class="card"><h2>Jurnal / Agenda Mengajar</h2><div class="toolbar"><button class="btn gold" onclick="addJournal()">+ Tambah Jurnal</button></div><div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Kelas</th><th>Mapel</th><th>Materi</th><th>Model</th><th>Aksi</th></tr></thead><tbody id="journalRows"></tbody></table></div></div></section>
+
+<section id="absensi" class="page"><div class="card"><h2>Absensi Siswa</h2><div class="row"><div class="field"><label>Tanggal</label><input id="attDate" type="date"></div><div class="field"><label>Kelas</label><select id="attClass" onchange="renderAttendance()"></select></div></div><div class="toolbar"><button class="btn gold" onclick="saveAttendance()">Simpan Absensi</button><button class="btn" onclick="setAll('H')">Semua Hadir</button></div><div class="tablewrap"><table><thead><tr><th>No</th><th>Nama</th><th>Status</th></tr></thead><tbody id="attRows"></tbody></table></div></div></section>
+
+<section id="nilai" class="page"><div class="card"><h2>Daftar Nilai</h2><div class="row"><div class="field"><label>Kelas</label><select id="gradeClass" onchange="renderGrades()"></select></div><div class="field"><label>Jenis Nilai</label><select id="gradeType"><option>Tugas</option><option>Formatif</option><option>Sumatif</option><option>PTS</option><option>PAS</option></select></div></div><button class="btn gold" onclick="saveGrades()">Simpan Nilai</button><div class="tablewrap section"><table><thead><tr><th>No</th><th>Nama</th><th>Nilai</th><th>Predikat</th></tr></thead><tbody id="gradeRows"></tbody></table></div></div></section>
+
+<section id="koko" class="page"><div class="card"><h2>Kokurikuler</h2><div class="toolbar"><button class="btn gold" onclick="addKoko()">+ Tambah Penilaian</button></div><div class="tablewrap"><table><thead><tr><th>Nama</th><th>Kegiatan</th><th>Nilai</th><th>Deskripsi</th><th>Aksi</th></tr></thead><tbody id="kokoRows"></tbody></table></div></div></section>
+
+<section id="denah" class="page"><div class="card"><h2>Denah Tempat Duduk</h2><div class="row"><div class="field"><label>Kelas</label><select id="seatClass" onchange="renderSeats()"></select></div><div class="field"><label>Kolom meja</label><input id="seatCols" type="number" min="1" max="8" value="4"></div></div><button class="btn gold" onclick="generateSeats()">Buat Denah</button><div id="seatGrid" class="grid section" style="grid-template-columns:repeat(4,1fr)"></div></div></section>
+
+
+<section id="adminprint" class="page">
+  <div class="card">
+    <h2>Pusat Administrasi & Cetak</h2>
+    <p class="muted">Pilih dokumen. Data mengikuti database AgendaGuru dan siap dipreview/cetak A4.</p>
+    <div class="admin-grid section">
+      <div class="print-card"><h3>📋 Daftar Siswa</h3><p>Daftar siswa per kelas.</p><button class="btn gold" onclick="printStudentList()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>✅ Daftar Absensi</h3><p>Rekap absensi berdasarkan tanggal.</p><button class="btn gold" onclick="printAttendance()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>📊 Daftar Nilai</h3><p>Nilai siswa dan predikat.</p><button class="btn gold" onclick="printGrades()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>📝 Jurnal Mengajar</h3><p>Rekap jurnal/agenda guru.</p><button class="btn gold" onclick="printJournal()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>📅 Jadwal Pelajaran</h3><p>Jadwal lengkap guru.</p><button class="btn gold" onclick="printSchedule()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>🎯 Kokurikuler</h3><p>Rekap kegiatan dan penilaian.</p><button class="btn gold" onclick="printKoko()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>🪑 Denah Tempat Duduk</h3><p>Denah kelas aktif.</p><button class="btn gold" onclick="printSeats()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>🏫 Identitas Sekolah</h3><p>Data sekolah, guru, dan kepala sekolah.</p><button class="btn gold" onclick="printSchool()">Preview & Cetak</button></div>
+      <div class="print-card"><h3>📚 Paket Rekap</h3><p>Ringkasan seluruh data administrasi.</p><button class="btn gold" onclick="printFullReport()">Preview & Cetak</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="backup" class="page"><div class="card"><h2>Backup & Restore</h2><p class="muted">Simpan seluruh data AgendaGuru dalam satu file JSON agar mudah dipindahkan ke perangkat lain.</p><div class="toolbar"><button class="btn gold" onclick="backup()">⬇ Backup JSON</button><label class="btn">⬆ Restore JSON<input type="file" accept=".json" onchange="restore(event)" hidden></label><button class="btn danger" onclick="resetData()">Reset Data</button></div></div></section>
+</main></div>
+<div id="toast" class="toast"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>

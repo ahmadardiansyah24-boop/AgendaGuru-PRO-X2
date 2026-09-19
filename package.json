@@ -1,0 +1,13 @@
+{
+  "name": "agenda-guru-pro-x2",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "mkdir -p dist && cp -r index.html css js dist/",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
