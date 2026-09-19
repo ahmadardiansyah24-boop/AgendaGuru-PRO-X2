@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rumah PPM & LKPD AI</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#132238;--muted:#64748b;--line:#e5eaf2;--brand:#2563eb;--brand2:#14b8a6;--soft:#eef5ff;--shadow:0 12px 30px rgba(15,23,42,.08);--radius:20px}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.side{background:#0f172a;color:#fff;padding:24px 16px;position:sticky;top:0;height:100vh}.brand{font-weight:800;font-size:20px;display:flex;gap:10px;align-items:center;margin:6px 8px 28px}.brand i{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#14b8a6)}
+.nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:12px 14px;border-radius:12px;margin:3px 0;cursor:pointer;font-weight:650}.nav button.active,.nav button:hover{background:#1e293b;color:#fff}.sidefoot{position:absolute;bottom:18px;left:18px;right:18px;color:#94a3b8;font-size:12px}
+.main{padding:28px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}.eyebrow{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--brand)}h1{font-size:clamp(28px,4vw,44px);line-height:1.05;margin:5px 0}.sub{color:var(--muted);max-width:760px}.badge{padding:8px 12px;border:1px solid #cde3ff;background:#f0f7ff;color:#0b4fa3;border-radius:999px;font-size:12px;font-weight:800}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}.card h2{font-size:18px;margin:0 0 6px}.muted{color:var(--muted);font-size:14px}.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.mode{border:1px solid var(--line);padding:16px;border-radius:16px;cursor:pointer;background:#fff}.mode.active{border-color:#8bb5ff;background:var(--soft);box-shadow:0 0 0 3px rgba(37,99,235,.08)}.mode strong{display:block;margin-bottom:6px}.mode span{font-size:13px;color:var(--muted)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:800;color:#475569}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;font:inherit;color:var(--ink)}.field textarea{min-height:90px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800;cursor:pointer}.primary{background:var(--brand);color:#fff}.secondary{background:#eef2f7;color:#334155}.accent{background:#0f766e;color:#fff}.btn:disabled{opacity:.5;cursor:not-allowed}
+.preview{min-height:460px;background:linear-gradient(180deg,#fff,#f8fbff);border:1px dashed #cbd5e1;border-radius:16px;padding:22px;overflow:auto}.preview h3{margin:0 0 8px;font-size:24px}.preview h4{margin:20px 0 8px}.preview section{padding:14px 0;border-bottom:1px solid var(--line)}.preview ul{padding-left:20px}.empty{display:grid;place-items:center;min-height:410px;color:#94a3b8;text-align:center}.status{margin-top:12px;font-size:13px;color:#475569}.cap{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{border:1px solid var(--line);padding:8px 10px;border-radius:999px;background:#fff;font-size:12px;font-weight:700}
+.templatebox{border:2px dashed #cbd5e1;padding:22px;border-radius:16px;text-align:center;background:#fafcff}.templatebox input{margin-top:12px}.locks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.lock{display:flex;align-items:center;gap:8px;font-size:13px;color:#475569}
+@media(max-width:1000px){.app{grid-template-columns:1fr}.side{height:auto;position:static}.sidefoot{display:none}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.nav button{font-size:12px}.grid{grid-template-columns:1fr}}
+@media(max-width:640px){.main{padding:16px}.nav{grid-template-columns:1fr 1fr}.modes,.form{grid-template-columns:1fr}.field.full{grid-column:auto}.top{align-items:flex-start;flex-direction:column}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand"><i>🏠</i><span>Rumah Guru AI</span></div>
+<div class="nav">
+<button class="active" data-tab="generator">✨ Generator</button>
+<button data-tab="template">🎨 Template</button>
+<button data-tab="image">🖼️ Image Studio</button>
+<button data-tab="settings">⚙️ AI Settings</button>
+</div>
+<div class="sidefoot">Gemini Engine · PRO+ · v2.0.0</div>
+</aside>
+<main class="main">
+<section class="top">
+<div><div class="eyebrow">RUMAH PPM & LKPD AI</div><h1>Dari ide guru jadi dokumen siap pakai.</h1><div class="sub">Pilih template Anda atau biarkan AI merancang. Konten pembelajaran, LKPD, asesmen, rubrik, dan visual dapat dibuat dari satu data pembelajaran.</div></div>
+<div class="badge">Gemini Connected via Server</div>
+</section>
+
+<div id="generator" class="tab">
+<div class="grid">
+<div class="card">
+<h2>Generator Dokumen</h2><div class="muted">Alur sinkron: CP → TP → ATP → PPM → LKPD → Asesmen → Rubrik</div>
+<div class="modes"><div class="mode active" data-mode="template"><strong>📄 Ikuti Template Saya</strong><span>Konten AI menyesuaikan struktur template yang Anda pilih.</span></div><div class="mode" data-mode="ai"><strong>✨ Desain oleh AI</strong><span>AI merancang struktur visual dari nol untuk hasil yang rapi.</span></div></div>
+<div class="form">
+<div class="field"><label>Jenis Dokumen</label><select id="docType"><option>PPM</option><option>Modul Ajar</option><option>LKPD</option><option>Asesmen</option><option>Rubrik</option><option>Bank Soal</option></select></div>
+<div class="field"><label>Mata Pelajaran</label><input id="subject" value="Matematika"/></div>
+<div class="field"><label>Kelas</label><input id="grade" value="VII"/></div>
+<div class="field"><label>Fase</label><input id="phase" value="D"/></div>
+<div class="field"><label>Semester</label><input id="semester" value="2"/></div>
+<div class="field"><label>Alokasi Waktu</label><input id="hours" value="16 JP"/></div>
+<div class="field full"><label>Materi</label><input id="topic" value="Bangun Datar"/></div>
+<div class="field"><label>Model Pembelajaran</label><select id="model"><option>PBL</option><option>PjBL</option><option>Discovery Learning</option><option>Inkuiri</option></select></div>
+<div class="field"><label>Pendekatan</label><select id="approach"><option>Pembelajaran Mendalam</option><option>Kontekstual</option><option>Kolaboratif</option></select></div>
+<div class="field full"><label>Instruksi tambahan</label><textarea id="notes" placeholder="Contoh: gunakan bahasa formal, aktivitas kontekstual, sertakan asesmen formatif."></textarea></div>
+</div>
+<div class="actions"><button class="btn primary" id="generate">✨ Generate dengan Gemini</button><button class="btn secondary" id="clear">Bersihkan</button></div>
+<div class="status" id="status">Siap. Pastikan GEMINI_API_KEY sudah tersedia sebagai Secret/Environment Variable di server AI Studio.</div>
+</div>
+<div class="card">
+<h2>Preview</h2><div class="muted">Hasil terstruktur dari Gemini akan tampil di sini.</div>
+<div class="preview" id="preview"><div class="empty"><div><div style="font-size:44px">🧠</div><strong>Belum ada dokumen</strong><br><span>Isi data di kiri lalu tekan Generate.</span></div></div></div>
+<div class="actions"><button class="btn secondary" id="print">🖨️ Cetak</button><button class="btn accent" id="exportJson">⬇️ Export JSON</button></div>
+</div>
+</div>
+</div>
+
+<div id="template" class="tab" style="display:none">
+<div class="card"><h2>🎨 Template Intelligence</h2><div class="muted">Upload template untuk diproses di server. Pada tahap berikutnya, AI Studio dapat memperluas parser DOCX/PDF/PPTX dan mengunci elemen desain.</div>
+<div class="templatebox"><div style="font-size:44px">📁</div><strong>Upload Template</strong><div class="muted">DOCX · PDF · PPTX · PNG/JPG</div><input type="file" id="templateFile" accept=".docx,.pdf,.pptx,.png,.jpg,.jpeg"/></div>
+<div class="locks"><label class="lock"><input type="checkbox" checked/> Kunci logo</label><label class="lock"><input type="checkbox" checked/> Kunci header</label><label class="lock"><input type="checkbox" checked/> Kunci footer</label><label class="lock"><input type="checkbox" checked/> Kunci warna & layout</label></div>
+<div class="actions"><button class="btn primary" id="analyzeTemplate">🔎 Analisis Template</button></div><div class="status" id="templateStatus">Belum ada template dianalisis.</div>
+</div>
+</div>
+
+<div id="image" class="tab" style="display:none">
+<div class="card"><h2>🖼️ Gemini Image Studio</h2><div class="muted">Gunakan mesin gambar Gemini untuk ilustrasi, cover, infografis, atau visual LKPD.</div>
+<div class="form" style="margin-top:16px"><div class="field full"><label>Prompt gambar</label><textarea id="imagePrompt" placeholder="Contoh: ilustrasi edukatif sistem peredaran darah manusia untuk LKPD IPA kelas VIII, gaya infografis modern, A4 portrait"></textarea></div><div class="field"><label>Rasio</label><select id="ratio"><option>1:1</option><option>4:3</option><option>3:4</option><option>16:9</option><option>9:16</option></select></div><div class="field"><label>Model</label><select id="imageModel"><option value="gemini-3.1-flash-image">Nano Banana 2 · gemini-3.1-flash-image</option><option value="gemini-3-pro-image">Nano Banana Pro · gemini-3-pro-image</option></select></div></div>
+<div class="actions"><button class="btn primary" id="generateImage">🎨 Generate Gambar</button></div><div class="preview" id="imagePreview" style="margin-top:16px"><div class="empty"><div><div style="font-size:44px">🎨</div><strong>Belum ada gambar</strong></div></div></div>
+</div>
+</div>
+
+<div id="settings" class="tab" style="display:none">
+<div class="card"><h2>⚙️ AI Settings</h2><div class="muted">Konfigurasi harus dikelola server-side. Jangan menaruh API key di HTML atau JavaScript.</div>
+<div class="form" style="margin-top:16px"><div class="field"><label>Text Model</label><input value="gemini-3.8-flash" id="textModel" /></div><div class="field"><label>Engine Version</label><input value="2.0.0" id="engineVersion"/></div><div class="field"><label>Capability Pack</label><input value="2.0.0" id="capVersion"/></div><div class="field"><label>AI Server</label><input value="/api/*" disabled/></div></div>
+<div class="cap"><span class="chip">PPM</span><span class="chip">Modul</span><span class="chip">LKPD</span><span class="chip">Asesmen</span><span class="chip">Rubrik</span><span class="chip">Template Analysis</span><span class="chip">Image Generation</span></div>
+<div class="actions"><button class="btn secondary" id="health">💓 Cek AI Server</button></div><div class="status" id="healthStatus">Belum dicek.</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const tabs=[...document.querySelectorAll('.tab')];
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');tabs.forEach(t=>t.style.display=t.id===b.dataset.tab?'block':'none')});
+document.querySelectorAll('.mode').forEach(m=>m.onclick=()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));m.classList.add('active');window.rumahMode=m.dataset.mode});window.rumahMode='template';
+
+function payload(){return{document_type:$('#docType').value,subject:$('#subject').value,grade:$('#grade').value,phase:$('#phase').value,semester:$('#semester').value,allocation:$('#hours').value,topic:$('#topic').value,model:$('#model').value,approach:$('#approach').value,notes:$('#notes').value,design_mode:window.rumahMode,engine_version:$('#engineVersion')?.value||'2.0.0'}}
+
+function render(doc){const p=$('#preview');if(!doc){p.innerHTML='<div class="empty">Tidak ada hasil.</div>';return}const arr=(v)=>Array.isArray(v)?v:[v].filter(Boolean);p.innerHTML='<h3>'+esc(doc.title||'Dokumen Pembelajaran')+'</h3><div class="muted">'+esc(doc.subtitle||'')+'</div>'+
+['tujuan','kompetensi_awal','pemantik','kegiatan','lkpd','asesmen','rubrik'].map(k=>{if(!doc[k])return'';let v=doc[k];let body=Array.isArray(v)?'<ul>'+v.map(x=>'<li>'+esc(typeof x==='string'?x:JSON.stringify(x))+'</li>').join('')+'</ul>':'<p>'+esc(typeof v==='string'?v:JSON.stringify(v,null,2))+'</p>';return'<section><h4>'+k.replace('_',' ').toUpperCase()+'</h4>'+body+'</section>'}).join('');}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+let last=null;
+$('#generate').onclick=async()=>{const st=$('#status');st.textContent='Mengirim ke Gemini…';$('#generate').disabled=true;try{const r=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload())});const d=await r.json();if(!r.ok)throw new Error(d.error||'Generate gagal');last=d.result||d;render(last);st.textContent='Selesai · '+(d.model||'Gemini');}catch(e){st.textContent='Gagal: '+e.message}finally{$('#generate').disabled=false}};
+$('#clear').onclick=()=>{last=null;$('#preview').innerHTML='<div class="empty"><div><div style="font-size:44px">🧠</div><strong>Belum ada dokumen</strong><br><span>Isi data di kiri lalu tekan Generate.</span></div></div>'};
+$('#print').onclick=()=>window.print();
+$('#exportJson').onclick=()=>{if(!last)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(last,null,2)],{type:'application/json'}));a.download='rumah-guru-ai.json';a.click()};
+$('#health').onclick=async()=>{try{const r=await fetch('/api/health');const d=await r.json();$('#healthStatus').textContent=JSON.stringify(d)}catch(e){$('#healthStatus').textContent='AI server tidak merespons: '+e.message}};
+$('#analyzeTemplate').onclick=()=>{const f=$('#templateFile').files[0];$('#templateStatus').textContent=f?'Template dipilih: '+f.name+'. Parser server siap dikembangkan.':'Pilih template terlebih dahulu.'};
+$('#generateImage').onclick=async()=>{const out=$('#imagePreview');out.innerHTML='<div class="empty">Generating…</div>';try{const r=await fetch('/api/image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:$('#imagePrompt').value,ratio:$('#ratio').value,model:$('#imageModel').value})});const d=await r.json();if(!r.ok)throw new Error(d.error||'Gagal');if(d.image_base64){out.innerHTML='<img style="max-width:100%;border-radius:14px" src="data:'+d.mime_type+';base64,'+d.image_base64+'"/>'}else out.innerHTML='<div class="empty">'+esc(JSON.stringify(d))+'</div>'}catch(e){out.innerHTML='<div class="empty">Gagal: '+esc(e.message)+'</div>'}};
+</script>
+</body>
+</html>
